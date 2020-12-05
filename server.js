@@ -24,17 +24,23 @@ app.get("/api/tables", (req, res) => res.json(reservation));
 
 app.get("/api/waitlist", (req, res) => res.json(waitList));
 
-app.post("/reserve", (req, res) => {
-    const newReservation = req.body
+app.post("/api/reserve", (req, res) => {
+  const newReservation = req.body;
 
-    console.log(newReservation)
+  console.log(newReservation);
+  if (reservation.length < 5) {
+    reservation.push(newReservation);
+    res.json(true);
+  } else {
+    waitList.push(newReservation);
+    res.json(false);
+  }
 
-    reservation.push(newReservation)
+  console.log(reservation);
+  console.log(waitList);
 });
 
 //start server
 app.listen(PORT, () => {
   console.log(`Started on PORT ${PORT}`);
 });
-
-
